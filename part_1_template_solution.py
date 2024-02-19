@@ -336,7 +336,57 @@ class Section1:
         """
 
         answer = {}
+        clf = RandomForestClassifier(random_state=42)
 
+        param_grid = {
+        'criterion': ['gini', 'entropy'],
+        'max_depth': [None, 10, 20],
+        'min_samples_split': [2, 5, 10],
+        'min_samples_leaf': [1, 2, 4],
+        'max_features': ['auto', 'sqrt', 'log2']
+         }
+
+        grid_search = GridSearchCV(estimator=clf, param_grid=param_grid, cv=5, n_jobs=-1)
+        grid_search.fit(X, y)
+
+        best_clf = grid_search.best_estimator_
+
+        clf.fit(X, y)
+
+        y_pred_train_orig = clf.predict(X)
+        confusion_matrix_train_orig = confusion_matrix(y, y_pred_train_orig)
+        accuracy_train_orig = accuracy_score(y, y_pred_train_orig)
+
+        y_pred_train_best = best_clf.predict(X)
+        confusion_matrix_train_best = confusion_matrix(y, y_pred_train_best)
+        accuracy_train_best = accuracy_score(y, y_pred_train_best)
+
+        y_pred_test_orig = clf.predict(Xtest)
+        confusion_matrix_test_orig = confusion_matrix(ytest, y_pred_test_orig)
+        accuracy_test_orig = accuracy_score(ytest, y_pred_test_orig)
+
+        y_pred_test_best = best_clf.predict(Xtest)
+        confusion_matrix_test_best = confusion_matrix(ytest, y_pred_test_best)
+        accuracy_test_best = accuracy_score(ytest, y_pred_test_best)
+
+        answer = {
+        "clf": clf,
+        "default_parameters": clf.get_params(),
+        "best_estimator": best_clf,
+        "grid_search": grid_search,
+        "mean_accuracy_cv": grid_search.best_score_,
+        "confusion_matrix_train_orig": confusion_matrix_train_orig,
+        "confusion_matrix_train_best": confusion_matrix_train_best,
+        "confusion_matrix_test_orig": confusion_matrix_test_orig,
+        "confusion_matrix_test_best": confusion_matrix_test_best,
+        "accuracy_orig_full_training": accuracy_train_orig,
+        "accuracy_best_full_training": accuracy_train_best,
+        "accuracy_orig_full_testing": accuracy_test_orig,
+        "accuracy_best_full_testing": accuracy_test_best
+         }
+        
+        return answer
+        
         # Enter your code, construct the `answer` dictionary, and return it.
 
         """
