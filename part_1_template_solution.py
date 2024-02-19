@@ -233,8 +233,38 @@ class Section1:
         y: NDArray[np.int32],
     ) -> dict[str, Any]:
         """ """
-
         answer = {}
+        part_D=Section1().partD(X,y)
+
+        clf_RF = RandomForestClassifier(random_state=42)
+        cv = ShuffleSplit(n_splits=5, random_state=42)
+        scores_RF = train_simple_classifier_with_cv(Xtrain=Xtrain, ytrain=ytrain, clf=clf_RF, cv=cv)
+        results_dict_RF = {}
+
+        for key, values in scores_RF.items():
+            if key == 'fit_time':
+                results_dict_RF['mean_fit_time'] = values.mean()
+                results_dict_RF['std_fit_time'] = values.std()
+            elif key == 'test_score':
+                results_dict_RF['mean_accuracy'] = values.mean()
+                results_dict_RF['std_accuracy'] = values.std()
+                
+        model_highest_accuracy = "Random Forest" if results_dict_RF['mean_accuracy'] > part_D['scores']['mean_accuracy'] else "Decision Tree"
+
+        model_lowest_variance = min(results_dict_RF['std_accuracy'], part_D['scores']['std_accuracy'])
+
+        model_fastest = min(results_dict_RF['mean_fit_time'], part_D['scores']['mean_fit_time'])
+        
+        answer = {
+        "clf_RF": clf_RF,
+        "clf_DT": part_D['clf'],
+        "cv": cv,
+        "scores_RF": results_dict_RF,
+        "scores_DT": part_D['scores'],
+        "model_highest_accuracy": model_highest_accuracy,
+        "model_lowest_variance": model_lowest_variance,
+        "model_fastest": model_fastest
+         }
 
         # Enter your code, construct the `answer` dictionary, and return it.
 
