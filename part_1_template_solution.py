@@ -383,6 +383,7 @@ class Section1:
         "accuracy_best_full_training": accuracy_train_best,
         "accuracy_orig_full_testing": accuracy_test_orig,
         "accuracy_best_full_testing": accuracy_test_best
+        }
          
         
 
