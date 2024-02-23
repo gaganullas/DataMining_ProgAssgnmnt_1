@@ -148,36 +148,37 @@ if __name__ == "__main__":
     Run your code and produce all your results for your report. We will spot check the
     reports, and grade your code with automatic tools.
     """
-
     ################################################
     # In real code, read MNIST files and define Xtrain and xtest appropriately
-    X = np.random.rand(120, 120)  # 100 samples, 100 features
+    # X = np.random.rand(120, 120) # 100 samples, 100 features
     # Fill labels with 0 and 1 (mimic 7 and 9s)
-    y = (X[:, :5].sum(axis=1) > 2.5).astype(int)
-    n_train = 100
-    Xtrain = X[0:n_train, :]
-    Xtest = X[n_train:, :]
-    ytrain = y[0:n_train]
-    ytest = y[n_train:]
-    X = Xtrain
-    y = ytrain
+    # y = (X[:, :5].sum(axis=1) > 2.5).astype(int)
+    # n_train = 100
+    
+    
+    # Xtrain = X[0:n_train, :]
+    # Xtest = X[n_train:, :]
+    # ytrain = y[0:n_train]
+    # ytest = y[n_train:]
+    # X = Xtrain
+    # y = ytrain
     ##############################################
-
+    
     # Attention: the seed should never be changed. If it is, automatic grading
     # of the assignment could very well fail, and you'd lose points.
     # Make sure that all sklearn functions you use that require a seed have this
     # seed specified in the argument list, namely: `random_state=self.seed` if
     # you are inside the solution class.
     part1 = Part1(seed=42, frac_train=0.2)
-
+    
     # X and Y are Mnist datasets
     answer1A = part_A(part1)
-    answer1B = part_B(part1)
+    answer1B, X, y , Xtest, ytest = part_B(part1) ## change made this line
     answer1C = part_C(part1, X, y)
     answer1D = part_D(part1, X, y)
     answer1E = part_E(part1, X, y)
     answer1F = part_F(part1, X, y)
-
+        
     # clf,  #: Type[BaseEstimator],  # Estimator class instance
     # cv,  #: Type[BaseCrossValidator],  # Cross Validator class instsance
     answer1G = part_G(part1, X, y, Xtest, ytest)
