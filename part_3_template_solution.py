@@ -220,7 +220,7 @@ class Section3:
         # Enter your code and fill the `answer` dictionary
         answer = {}
 
-        SV_clf=SVC(random_state=self.seed,kernel='linear')
+        SV_clf=SVC(random_state=self.seed)
         cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=self.seed)
 
         scoring = {
@@ -257,7 +257,7 @@ class Section3:
         else:
             answer["is_precision_higher_than_recall"]= False
 
-        answer['explain_is_precision_higher_than_recall']='Testing purpose'
+        answer['explain_is_precision_higher_than_recall']='Yes, Precision being higher than recall indicates that the classifier makes fewer false positive errors relative to its ability to correctly identify all positive instances.'
 
         answer['confusion_matrix_train'] = confusion_matrix(y,y_pred_train)
         answer['confusion_matrix_test']  = confusion_matrix(ytest,y_pred_test)
@@ -307,10 +307,10 @@ class Section3:
         class_weights = compute_class_weight(class_weight='balanced', classes=np.unique(y), y=y)
 
         # Define the classifier with weighted loss function
-        SV_clf_weighted = SVC(random_state=self.seed, kernel='linear', class_weight={0: class_weights[0], 1: class_weights[1]})
+        SV_clf_weighted = SVC(random_state=self.seed, class_weight={0: class_weights[0], 1: class_weights[1]})
 
         # Define the cross-validation strategy
-        cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+        cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=self.seed)
 
         # Define scoring metrics
         scoring = {

@@ -132,9 +132,8 @@ class Section2:
         ntest_list: list[int] = [],
     ) -> dict[int, dict[str, Any]]:
         
-        answer = {}
-   
-                
+        answer = {}   
+        
         def partB_sub(X, y, Xtest, ytest):
     
             clf = DecisionTreeClassifier(random_state=self.seed)
@@ -225,8 +224,8 @@ class Section2:
          
             
             # Calculate class counts for training and testing sets
-            class_count_train = np.bincount(y)
-            class_count_test = np.bincount(ytest)
+            class_count_train = list(np.bincount(y))
+            class_count_test = list(np.bincount(ytest))
     
             answer = {}
             answer["partC"] = answer_C

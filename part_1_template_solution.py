@@ -103,6 +103,7 @@ class Section1:
         answer["length_ytest"] = len(ytest)
         answer["max_Xtrain"] = Xtrain.max()
         answer["max_Xtest"] = Xtest.max()
+        
         return answer, Xtrain, ytrain, Xtest, ytest
 
     """
@@ -352,18 +353,7 @@ class Section1:
          5) max_features 
          5) n_estimators
         """
-        def compute_acc_confusion_matx(confusion_matrix):
-            """
-            Calculate accuracy from a confusion matrix.
-            """
-
-            TruePositive = confusion_matrix[1, 1]  # True Positives
-            TrueNegative = confusion_matrix[0, 0]  # True Negatives
-            total_samples = confusion_matrix.sum() 
-
-            accuracy = (TruePositive+ TrueNegative) / total_samples
-            return accuracy
-        
+ 
         answer = {}
         accuracies = {}
 
@@ -402,10 +392,10 @@ class Section1:
         confusion_matrix_test_best = confusion_matrix(ytest, y_pred_test_best)
         
         # Calculate accuracy for each confusion matrix
-        accuracies["accuracy_orig_full_training"] = compute_acc_confusion_matx(confusion_matrix_train_orig)
-        accuracies["accuracy_orig_full_testing"] = compute_acc_confusion_matx(confusion_matrix_test_orig)
-        accuracies["accuracy_best_full_training"] = compute_acc_confusion_matx(confusion_matrix_train_best)
-        accuracies["accuracy_best_full_testing"] = compute_acc_confusion_matx(confusion_matrix_test_best) 
+        accuracies["accuracy_orig_full_training"] = nu.compute_acc_confusion_matx(confusion_matrix_train_orig)
+        accuracies["accuracy_orig_full_testing"] = nu.compute_acc_confusion_matx(confusion_matrix_test_orig)
+        accuracies["accuracy_best_full_training"] = nu.compute_acc_confusion_matx(confusion_matrix_train_best)
+        accuracies["accuracy_best_full_testing"] = nu.compute_acc_confusion_matx(confusion_matrix_test_best) 
         
 
         answer = {
