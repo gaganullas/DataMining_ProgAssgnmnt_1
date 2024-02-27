@@ -268,11 +268,25 @@ class Section1:
         RF_var = results_dict_RF['std_accuracy'] ** 2
         
                 
-        model_highest_accuracy = "Random Forest" if results_dict_RF['mean_accuracy'] > part_D['scores']['mean_accuracy'] else "Decision Tree"
+        model_highest_accuracy = "random-forest" if results_dict_RF['mean_accuracy'] > part_D['scores']['mean_accuracy'] else "decision-tree"
+        
+        if Part_D_var < RF_var:
+            model_lowest_variance = "decision-tree"
+        else:
+            model_lowest_variance =  "random-forest"
+            
+           
+        
+        Part_D_time = part_D['scores']['mean_fit_time']
+        RF_time = results_dict_RF['mean_fit_time']
+        
 
-        model_lowest_variance = min(RF_var, Part_D_var)
-
-        model_fastest = min(results_dict_RF['mean_fit_time'], part_D['scores']['mean_fit_time'])
+        
+        if Part_D_time < RF_time:
+            model_fastest = "decision-tree"
+        else:
+            model_fastest =  "random-forest"
+       
         
         answer = {
         "clf_RF": clf_RF,
