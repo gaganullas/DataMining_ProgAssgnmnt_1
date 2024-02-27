@@ -287,6 +287,7 @@ class Section1:
         else:
             model_fastest =  "random-forest"
        
+    
         
         answer = {
         "clf_RF": clf_RF,
