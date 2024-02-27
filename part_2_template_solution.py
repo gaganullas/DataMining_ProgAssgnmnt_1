@@ -154,7 +154,7 @@ class Section2:
                 }
             
             answer_C = {}
-            answer_C["scores"] = results_dict_C
+            answer_C["scores_C"] = results_dict_C
             answer_C["clf"] = clf  
             answer_C["cv"] = cv  
 
@@ -178,7 +178,7 @@ class Section2:
             }
 
             answer_D = {}
-            answer_D["scores"] = results_dict_D
+            answer_D["scores_D"] = results_dict_D
             answer_D["clf"] = clf_D  
             answer_D["cv"] = cv_D  
 
@@ -199,15 +199,19 @@ class Section2:
 
             lf_LR = LogisticRegression(max_iter=300, random_state=self.seed)
             cv_LR = ShuffleSplit(n_splits=5, random_state=self.seed)
-            scores_LR = u.train_simple_classifier_with_cv(Xtrain=X, ytrain=y, clf=lf_LR, cv=cv_LR)
+            #scores_LR = u.train_simple_classifier_with_cv(Xtrain=X, ytrain=y, clf=lf_LR, cv=cv_LR)
+            scores_LR = cross_validate(lf_LR,X, y, cv=cv_LR, return_train_score=True)
             results_dict_F = {}
  
             mean_cv_accuracy_F = scores_LR["test_score"].mean()
 
             lf_LR.fit(X, y)
     
-            scores_train_F = accuracy_score(y, lf_LR.predict(X))
-            scores_test_F = accuracy_score(ytest, lf_LR.predict(Xtest))
+            #scores_train_F = accuracy_score(y, lf_LR.predict(X))
+            #scores_test_F = accuracy_score(ytest, lf_LR.predict(Xtest))
+
+            scores_train_F = lf_LR.score(X,y)
+            scores_test_F = lf_LR.score(Xtest,ytest)
             
             conf_mat_train = confusion_matrix(y, lf_LR.predict(X))
             conf_mat_test = confusion_matrix(ytest, lf_LR.predict(Xtest))
